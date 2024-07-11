@@ -1,0 +1,11 @@
+
+
+.footer1 {
+  padding: 2.5rem; /* 40px */
+  background: linear-gradient(to bottom, rgb(13,16,49), rgb(246,195,71));
+  color: #333333; /* Couleur du texte neutre */
+  display:flex;
+  justify-content: space-between;
+
+}
+/* background: linear-gradient(to bottom, rgb(246,195,71), rgb(13,16,49) ); */

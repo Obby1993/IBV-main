@@ -1,0 +1,11 @@
+.contener {
+  /* width: 100vw; */
+  height: 100vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 20px;
+  font-family: emoji;
+  background-color: rgb(13, 16, 49);
+  padding: 1%;
+}

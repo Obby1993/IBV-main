@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+.titre {
+  color: #FDA63A;
+  font-size:60px;
+  font-weight: 500;
+  font-family: emoji;
+  padding-left: 1.5rem
+}
+
+.titreCard {
+  color: #FDA63A;
+  font-size:20px;
+  font-weight: 900;
+  font-family: emoji;
+  padding-left: 1.5rem
+}
+
+.textBlue {
+  color: rgb(13,16,49);
+  font-family: emoji;
+  font-size:20px;
+
+}

@@ -1,0 +1,9 @@
+.contener {
+  /* width: 100vw; */
+  height: 100%;
+  font-size: 20px;
+  font-family: emoji;
+  background-color: rgb(13, 16, 49);
+  padding: 1% 1% 0% 1%;
+
+}
