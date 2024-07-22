@@ -24,7 +24,7 @@ export default function LoginPage() {
     if (res?.error) {
       setError('Invalid credentials');
     } else {
-      router.push('http://localhost:3000/events');
+      router.push(`${process.env.NEXT_PUBLIC_URL}/events`);
     }
   };
 
