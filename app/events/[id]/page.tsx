@@ -21,7 +21,7 @@ interface EventPageProps {
 
 // Récupération des données de l'événement
 async function fetchEvent(id: string): Promise<Event> {
-  const apiUrl = process.env.NEXT_PUBLIC_URL;
+  const apiUrl = process.env.NEXT_PUBLIC_APP_URL;
   const res = await fetch(`${apiUrl}/api/events/${id}`);
   console.log(id);
 
@@ -89,7 +89,7 @@ export default function EventPage({ params }: EventPageProps) {
 
    
     try { 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/events/${event.id}`,
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/events/${event.id}`,
       {
         method: 'DELETE',
       });
@@ -98,7 +98,7 @@ export default function EventPage({ params }: EventPageProps) {
       setSuccessMessage('Event deleted successfully');
 
       // Redirect to the events page after successful deletion
-      router.push(`${process.env.NEXT_PUBLIC_URL}/events`);
+      router.push(`${process.env.NEXT_PUBLIC_APP_URL}/events`);
     } catch (error) {
       console.error('Error deleting event:', error);
       setError('Failed to delete event');
