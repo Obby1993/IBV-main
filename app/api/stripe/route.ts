@@ -1,66 +1,57 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 import { buffer } from 'micro';
 import Stripe from 'stripe';
-import { stripe } from '../../../lib/stripe';
-import prisma from '../../../lib/prisma'; // Ajustez le chemin selon votre configuration Prisma
+import { PrismaClient } from '@prisma/client';
 
-// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-//   apiVersion: '2022-11-15',
-// });
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
+  apiVersion: '2024-04-10',
+});
+
+const prisma = new PrismaClient();
+
+export async function POST(req: NextRequest) {
+  const buf = await bufferFromRequest(req);
+  const sig = req.headers.get('stripe-signature') || '';
+
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(buf, sig, process.env.STRIPE_WEBHOOK_SECRET!);
+  } catch (err) {
+    console.error('Webhook signature verification failed.', err);
+    return NextResponse.json({ error: 'Webhook Error' }, { status: 400 });
+  }
+
+  switch (event.type) {
+    case 'checkout.session.completed':
+      const session = event.data.object;
+      await handleCheckoutSession(session);
+      break;
+    default:
+      console.log(`Unhandled event type ${event.type}`);
+  }
+
+  return NextResponse.json({ received: true }, { status: 200 });
+}
+
+async function bufferFromRequest(req: NextRequest): Promise<Buffer> {
+  const body = await req.text();
+  return Buffer.from(body);
+}
+
+async function handleCheckoutSession(session: any) {
+  await prisma.player.update({
+    where: {
+      stripeCustomerId: session.customer,
+    },
+    data: {
+      paiement: true,
+    },
+  });
+}
 
 export const config = {
   api: {
-    bodyParser: false, // Désactiver le bodyParser intégré de Next.js pour traiter les requêtes Stripe
+    bodyParser: false,
   },
 };
-
-const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === 'POST') {
-    const buf = await buffer(req);
-    const sig = req.headers['stripe-signature']!;
-
-    let event: Stripe.Event;
-
-    try {
-        event = stripe.webhooks.constructEvent(buf, sig, process.env.STRIPE_WEBHOOK_SECRET!);
-      } catch (err) {
-        console.error('Webhook signature verification failed.');
-        if (err instanceof Error) {
-          return res.status(400).send(`Webhook Error: ${err.message}`);
-        } else {
-          return res.status(400).send('Webhook Error: An unknown error occurred.');
-        }
-      }
-
-    // Handle the event
-    switch (event.type) {
-      case 'checkout.session.completed':
-        const session = event.data.object as Stripe.Checkout.Session;
-        // Mettre à jour la base de données ici
-        const customerId = session.customer as string;
-
-        try {
-          await prisma.player.update({
-            where: { stripeCustomerId: customerId },
-            data: { paiement: true },
-          });
-        } catch (err) {
-          console.error('Error updating player record:', err);
-          return res.status(500).send('Server error');
-        }
-
-        break;
-      // Ajoutez d'autres types d'événements si nécessaire
-      default:
-        console.warn(`Unhandled event type ${event.type}`);
-    }
-
-    // Retourner une réponse 200 pour indiquer à Stripe que le webhook a été reçu correctement
-    res.json({ received: true });
-  } else {
-    res.setHeader('Allow', 'POST');
-    res.status(405).end('Method Not Allowed');
-  }
-};
-
-export default webhookHandler;
