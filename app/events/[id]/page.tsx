@@ -54,6 +54,7 @@ export default function EventPage({ params }: EventPageProps) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [success, setSuccess] = useState(false)
   const { data: session } = useSession()
+
   useEffect(() => {
     // Charger l'événement lors du montage du composant
     const loadEvent = async () => {
@@ -98,7 +99,7 @@ export default function EventPage({ params }: EventPageProps) {
       setSuccessMessage('Event deleted successfully');
 
       // Redirect to the events page after successful deletion
-      router.push(`${process.env.NEXT_PUBLIC_APP_URL}/events`);
+      router.push(`/events`);
     } catch (error) {
       console.error('Error deleting event:', error);
       setError('Failed to delete event');
