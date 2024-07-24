@@ -23,38 +23,40 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       event = stripe.webhooks.constructEvent(buf, sig, process.env.STRIPE_WEBHOOK_SECRET!);
     } catch (err) {
-      console.error('Webhook signature verification failed.');
+      console.error('Webhook signature verification failed:', err);
       return res.status(400).send(`Webhook Error: ${(err as Error).message}`);
     }
 
     // Handle the event
-    switch (event.type) {
-      case 'checkout.session.completed':
-        const session = event.data.object as Stripe.Checkout.Session;
-        // Mettre à jour la base de données ici
-        const customerId = session.customer as string;
+    if (event.type === 'checkout.session.completed') {
+      const session = event.data.object as Stripe.Checkout.Session;
 
+      if (session.metadata) {
         try {
-          await prisma.player.update({
-            where: { stripeCustomerId: customerId },
-            data: { paiement: true },
+          await prisma.player.create({
+            data: {
+              name: session.metadata.name!,
+              email: session.metadata.email!,
+              niveau: session.metadata.niveau!,
+              genre: session.metadata.genre!,
+              stripeCustomerId: session.customer as string,
+              eventId: session.metadata.eventId!,
+              paiement: true,
+            },
           });
-        } catch (err) {
-          console.error('Error updating player record:', err);
-          return res.status(500).send('Server error');
+        } catch (error) {
+          console.error('Erreur lors de la création de l\'utilisateur:', error);
+          return res.status(500).json({ error: 'Database Error' });
         }
-
-        break;
-      // Ajoutez d'autres types d'événements si nécessaire
-      default:
-        console.warn(`Unhandled event type ${event.type}`);
+      } else {
+        console.error('Metadata is null or undefined in session:', session);
+        return res.status(400).json({ error: 'Metadata is null or undefined' });
+      }
     }
 
-    // Retourner une réponse 200 pour indiquer à Stripe que le webhook a été reçu correctement
-    res.json({ received: true });
+    res.status(200).json({ received: true });
   } else {
-    res.setHeader('Allow', 'POST');
-    res.status(405).end('Method Not Allowed');
+    res.status(405).json({ error: 'Method Not Allowed' });
   }
 };
 

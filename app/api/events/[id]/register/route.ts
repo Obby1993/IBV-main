@@ -29,29 +29,30 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
 
     
     
-         // Créer un client Stripe
-         const customer = await stripe.customers.create({
-          name,
-          email,
-        });
+      // Créer un client Stripe
+    const customer = await stripe.customers.create({
+      name,
+      email,
+    });
         
 
-    const newPlayer = await prisma.player.create( {
-      data:{ name, paiement: false, niveau, genre, email, stripeCustomerId: customer.id, eventId:id }
-    });
+    // const newPlayer = await prisma.player.create( {
+    //   data:{ name, paiement: false, niveau, genre, email, stripeCustomerId: null, eventId:id }
+    // });
 
 
-    const updatedEvent = await prisma.event.update({
-      where: { id },
-      data: {
-        players: {
-          connect: { id: newPlayer.id }
-        },
-      },
-      include: {
-        players: true,
-      },
-    });
+    // const updatedEvent = await prisma.event.update({
+    //   where: { id },
+    //   data: {
+    //     players: {
+    //       connect: { id: newPlayer.id }
+    //     },
+    //   },
+    //   include: {
+    //     players: true,
+    //   },
+    // });
+
     // Créer une session de paiement Stripe
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -65,6 +66,13 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       customer: customer.id,
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/events/${event.id}?success=true`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/events/${event.id}`,
+      metadata: {
+        name,
+        niveau,
+        genre,
+        email,
+        eventId: id,
+        },
     });
 
     return NextResponse.json( { sessionId: session.id}, { status: 200 });
