@@ -8,10 +8,9 @@ import prisma from '../../../lib/prisma';
 //   apiVersion: '2022-11-15',
 // });
 
+
 export const config = {
-  api: {
-    bodyParser: false, // Désactiver le bodyParser intégré de Next.js pour traiter les requêtes Stripe
-  },
+  bodyParser: false,
 };
 
 const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
