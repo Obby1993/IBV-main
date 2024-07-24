@@ -1,7 +1,8 @@
-import React from "react";
+import React , { useState }  from "react";
 import  {Event}  from '../../../types';
 import  StyledLink from "../../StyledLink";
 import style from "../cardShow/cardShow.module.css"
+import { motion } from "framer-motion";
 
 
 interface CardProps  {
@@ -10,6 +11,11 @@ interface CardProps  {
 };
 
 export default function Card({event}:CardProps) {
+  const [flipped, setFlipped] = useState(false);
+
+  const handleFlip = () => {
+    setFlipped(!flipped);
+  };
 
   return (
     <div className="card card-compact w-96 bg-base-100 shadow-xl">
