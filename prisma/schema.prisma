@@ -30,15 +30,17 @@ model Event {
   stripePriceId      String?
 }
 model Player {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  email     String?
-  paiement  Boolean
-  niveau    String
-  genre     String
-  eventId   String @db.ObjectId
-  event     Event  @relation(fields: [eventId], references: [id])
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  email             String?
+  paiement          Boolean @default(false)
+  stripeCustomerId  String?  @unique
+  niveau            String
+  genre             String
+  eventId           String @db.ObjectId
+  event             Event  @relation(fields: [eventId], references: [id])
 }
+
 type Address {
   street String
   city   String

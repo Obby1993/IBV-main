@@ -5,15 +5,6 @@ import {Player} from '../../../../types.js'
 
 const prisma = new PrismaClient();
 
-// if (!process.env.STRIPE_SECRET_KEY) {
-//   throw new Error('Stripe secret key is not defined in environment variables');
-// }
-// // Créer une instance de l'API Stripe avec la clé secrète
-// const stripeAPI = new Stripe(process.env.STRIPE_SECRET_KEY, {
-//   apiVersion: '2024-04-10',
-// });
-
-
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   //récupère l'id des params
@@ -36,10 +27,17 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       return NextResponse.json({ error: 'Event not found' }, { status: 404 });
     }
 
-
+    
+    
+         // Créer un client Stripe
+         const customer = await stripe.customers.create({
+          name,
+          email,
+        });
+        
 
     const newPlayer = await prisma.player.create( {
-      data:{ name, paiement: false, niveau, genre, email, eventId:id }
+      data:{ name, paiement: false, niveau, genre, email, stripeCustomerId: customer.id, eventId:id }
     });
 
 
@@ -53,12 +51,6 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       include: {
         players: true,
       },
-    });
-
-     // Créer un client Stripe
-     const customer = await stripe.customers.create({
-      name,
-      email,
     });
     // Créer une session de paiement Stripe
     const session = await stripe.checkout.sessions.create({
