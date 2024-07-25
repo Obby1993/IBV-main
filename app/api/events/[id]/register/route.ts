@@ -26,7 +26,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     if (!event) {
       return NextResponse.json({ error: 'Event not found' }, { status: 404 });
     }
-
+ 
     
     const newPlayer = await prisma.player.create( {
       data:{ name, paiement: false, niveau, genre, email, stripeCustomerId: null, eventId:id }
