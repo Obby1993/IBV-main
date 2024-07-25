@@ -6,7 +6,7 @@ import prisma from '../../../lib/prisma';
 // export const config = {
 //   runtime: 'edge',
 // };
-
+console.log("test 1")
 // Type guard pour vérifier que le client est un Customer et non un DeletedCustomer
 function isCustomer(customer: Stripe.Customer | Stripe.DeletedCustomer): customer is Stripe.Customer {
   return (customer as Stripe.Customer).metadata !== undefined;
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     const session = event.data.object as Stripe.Checkout.Session;
     if (session.customer) {
       const customer = await stripe.customers.retrieve(session.customer as string);
-
+      console.log(customer)
       if (isCustomer(customer) && customer.metadata.ibvID) {
         const ibvID = customer.metadata.ibvID;
 

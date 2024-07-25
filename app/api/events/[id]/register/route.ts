@@ -27,18 +27,18 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       return NextResponse.json({ error: 'Event not found' }, { status: 404 });
     }
  
-    
+    // Créer player
     const newPlayer = await prisma.player.create( {
       data:{ name, paiement: false, niveau, genre, email, stripeCustomerId: null, eventId:id }
     });
     
-         // Créer un client Stripe
-         const customer = await stripe.customers.create({
-          name,
-          email,
-          metadata: {ibvId:newPlayer.id },
-        });
-        
+      // Créer un client Stripe
+    const customer = await stripe.customers.create({
+      name,
+      email,
+      metadata: {ibvId:newPlayer.id },
+    });
+    
 
 
 

@@ -25,7 +25,7 @@ export default function Events()  {
       <div className={style.contener}>
         <h1 className='titre'>Nos événements</h1>
         <ul className='flex justify-around align-middle p-5'>
-          {events.map(event => (
+          {events && events.map(event => (
             <li key={event.id}>
               <Card event={event}/>
             </li>
