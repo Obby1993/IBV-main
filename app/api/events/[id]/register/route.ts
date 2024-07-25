@@ -28,30 +28,20 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     }
 
     
+    const newPlayer = await prisma.player.create( {
+      data:{ name, paiement: false, niveau, genre, email, stripeCustomerId: null, eventId:id }
+    });
     
          // Créer un client Stripe
          const customer = await stripe.customers.create({
           name,
           email,
+          metadata: {ibvId:newPlayer.id },
         });
         
 
-    const newPlayer = await prisma.player.create( {
-      data:{ name, paiement: false, niveau, genre, email, stripeCustomerId: customer.id, eventId:id }
-    });
 
 
-    const updatedEvent = await prisma.event.update({
-      where: { id },
-      data: {
-        players: {
-          connect: { id: newPlayer.id }
-        },
-      },
-      include: {
-        players: true,
-      },
-    });
     // Créer une session de paiement Stripe
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],

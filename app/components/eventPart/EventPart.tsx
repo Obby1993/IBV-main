@@ -5,10 +5,13 @@ import Card from "./card/CardEvent"
 import style from "./events.module.css"
 import  {Event}  from '../../types';
 
+
 type Props = {};
 
 export default function EventPart() {
   const [events, setEvents] = useState<Event[]>([]);
+
+
   useEffect(() => {
     fetch('/api/events')
       .then(res => res.json())
@@ -18,7 +21,7 @@ export default function EventPart() {
   const selectedEvents = events.slice(0, 2);
 
   return(
-  <div className={style.contenaire}>
+  <div className={style.contenaire} >
     <h1 className="titre">Prochains Evénements</h1>
         <div className=" flex justify-around items-center gap-4">
           {selectedEvents.map(event => (

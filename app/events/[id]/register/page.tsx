@@ -55,8 +55,8 @@ export default function RegisterPage({ params }: { params: { id: string } }) {
         sessionId,
       });
 
-      const updatedEvent = await res.json();
-      console.log('Updated event:', updatedEvent);
+      // const updatedEvent = await res.json();
+      // console.log('Updated event:', updatedEvent);
       // const { sessionId } = await res.json();
 
 
