@@ -3,9 +3,9 @@ import Stripe from 'stripe';
 import { stripe } from '../../lib/stripe';
 import prisma from '../../lib/prisma';
 
-export const config = {
-  runtime: 'edge',
-};
+// export const config = {
+//   runtime: 'edge',
+// };
 
 // Type guard pour vérifier que le client est un Customer et non un DeletedCustomer
 function isCustomer(customer: Stripe.Customer | Stripe.DeletedCustomer): customer is Stripe.Customer {
