@@ -16,9 +16,6 @@ interface EventPageProps {
 }
 
 
-
-
-
 // Récupération des données de l'événement
 async function fetchEvent(id: string): Promise<Event> {
   const apiUrl = process.env.NEXT_PUBLIC_APP_URL;
