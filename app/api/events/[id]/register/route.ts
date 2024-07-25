@@ -42,17 +42,6 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
 
 
 
-    // const updatedEvent = await prisma.event.update({
-    //   where: { id },
-    //   data: {
-    //     players: {
-    //       connect: { id: newPlayer.id }
-    //     },
-    //   },
-    //   include: {
-    //     players: true,
-    //   },
-    // });
     // Créer une session de paiement Stripe
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
