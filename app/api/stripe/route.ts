@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { stripe } from '../../lib/stripe';
-import prisma from '../../lib/prisma';
+import { stripe } from '../../../lib/stripe';
+import prisma from '../../../lib/prisma';
 
 // export const config = {
 //   runtime: 'edge',
