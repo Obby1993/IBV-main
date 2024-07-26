@@ -1,5 +1,6 @@
 // lib/helpers.ts
 import prisma from "@/lib/prisma";
+import Stripe from 'stripe';
 
 export const findPlayerFromCustomer = async (ibvID: unknown) => {
     if (typeof ibvID !== "string") {
@@ -12,3 +13,8 @@ export const findPlayerFromCustomer = async (ibvID: unknown) => {
         },
     });
 };
+
+
+  export function isCustomer(customer: Stripe.Customer | Stripe.DeletedCustomer): customer is Stripe.Customer {
+    return (customer as Stripe.Customer).metadata !== undefined;
+  }

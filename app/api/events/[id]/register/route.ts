@@ -31,13 +31,15 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     const newPlayer = await prisma.player.create( {
       data:{ name, paiement: false, niveau, genre, email, stripeCustomerId: null, eventId:id }
     });
+    // console.log("newplayer:", newPlayer);
     
       // Créer un client Stripe
     const customer = await stripe.customers.create({
       name,
       email,
-      metadata: {ibvId:newPlayer.id },
+      metadata: {ibvId: newPlayer.id },
     });
+    // console.info("customer register:", customer);
     
 
 

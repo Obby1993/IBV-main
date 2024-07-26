@@ -2,60 +2,68 @@ import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
-import { findPlayerFromCustomer } from "@/lib/helpers"; // Importez la fonction auxiliaire
+import { findPlayerFromCustomer, isCustomer } from "@/lib/helpers"; // Assurez-vous d'importer correctement votre fonction auxiliaire
 
+export async function POST(req: NextRequest) {
+  const sig = req.headers.get('stripe-signature');
 
-export const POST = async (req: NextRequest) => {
-    const body = (await req.json()) as Stripe.Event;
+  if (!sig) {
+    return new NextResponse('Missing stripe-signature header', { status: 400 });
+  }
 
+  let event: Stripe.Event;
 
-switch(body.type) {
-    case "checkout.session.completed": {
-        const session = body.data.object as Stripe.Checkout.Session;
-        
-        if (session.customer && typeof session.customer === "string") {
-            const customer = await stripe.customers.retrieve(session.customer);
+  const body = await req.text();
+  // console.log("body:", body);
 
-            if (!customer.deleted && 'metadata' in customer) {
-                const ibvID = customer.metadata.ibvID;
-                const player = await findPlayerFromCustomer(ibvID);
+  try {
+    event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!);
+  } catch (err) {
+    console.error('Webhook signature verification failed.');
+    return new NextResponse(`Webhook Error: ${err instanceof Error ? err.message : 'Unknown error'}`, { status: 400 });
+  }
+ 
+  if (event.type === 'checkout.session.completed') {
+    const session = event.data.object as Stripe.Checkout.Session;
+    console.log("SESSION :",session);
+    console.log("SESSION.CUSTOMER:",session.customer);
+    if (session.customer && typeof session.customer === "string") {
+      const customer = await stripe.customers.retrieve(session.customer);
 
-                if (player?.id) {
-                    await prisma.player.update({
-                        where: {
-                            id: player.id,
-                        },
-                        data: {
-                            paiement: true,
-                        },
-                    });
-                    console.log("Checkout session completed", session);
-                }
-            }
+      console.log("CUSTOMER webhook:",customer);
+      if (isCustomer(customer)) {
+        console.log("CUSTOMER metadata:",customer.metadata);
+        const ibvId = customer.metadata.ibvId;
+        console.log("CUSTOMER METADATA IBVID:", customer.metadata.ibvId);
+        const player = await findPlayerFromCustomer(ibvId);
+
+        if (player?.id) {
+          try {
+            await prisma.player.update({
+              where: {
+                id: player.id,
+              },
+              data: {
+                paiement: true,
+              },
+            });
+            console.log("Checkout session completed", session);
+          } catch (err) {
+            console.error('Error updating player record:', err);
+            return new NextResponse('Server error', { status: 500 });
+          }
         }
-        break
-        
+      } else {
+        console.error('ibvID is missing in customer metadata or customer is not a valid Customer');
+        return new NextResponse('ibvID is missing in customer metadata or customer is not a valid Customer', { status: 400 });
+      }
+    } else {
+      console.warn('Customer ID is missing or invalid in session.');
+      return new NextResponse('Customer ID is missing or invalid in session.', { status: 400 });
     }
-    default: {
-        console.log("Unhandled event type", body.type);
-        
-    }
+  } else {
+    console.warn(`Unhandled event type ${event.type}`);
+  }
+
+  return new NextResponse(JSON.stringify({ received: true }), { status: 200 });
 }
-
-return NextResponse.json({
-    ok: true,
-})
-
-}
-
-// export const findPlayerFromCustomer = async (ibvID: unknown) =>{
-//     if (typeof ibvID !== "string") {
-//         return null;
-//     }
-
-//     return prisma.player.findFirst({
-//         where: {
-//             id: ibvID,
-//         },
-//     })
-// }
