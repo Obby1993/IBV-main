@@ -2,6 +2,8 @@ import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
+import { findPlayerFromCustomer } from "@/lib/helpers"; // Importez la fonction auxiliaire
+
 
 export const POST = async (req: NextRequest) => {
     const body = (await req.json()) as Stripe.Event;
@@ -46,14 +48,14 @@ return NextResponse.json({
 
 }
 
-export const findPlayerFromCustomer = async (ibvID: unknown) =>{
-    if (typeof ibvID !== "string") {
-        return null;
-    }
+// export const findPlayerFromCustomer = async (ibvID: unknown) =>{
+//     if (typeof ibvID !== "string") {
+//         return null;
+//     }
 
-    return prisma.player.findFirst({
-        where: {
-            id: ibvID,
-        },
-    })
-}
+//     return prisma.player.findFirst({
+//         where: {
+//             id: ibvID,
+//         },
+//     })
+// }
