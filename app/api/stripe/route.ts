@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
       if (isCustomer(customer)) {
         console.log("CUSTOMER metadata:",customer.metadata);
         const ibvId = customer.metadata.ibvId;
-        console.log("CUSTOMER METADATA IBVID:", customer.metadata.ibvId);
+        console.log("CUSTOMER METADATA ibvId:", customer.metadata.ibvId);
         const player = await findPlayerFromCustomer(ibvId);
 
         if (player?.id) {
@@ -54,8 +54,8 @@ export async function POST(req: NextRequest) {
           }
         }
       } else {
-        console.error('ibvID is missing in customer metadata or customer is not a valid Customer');
-        return new NextResponse('ibvID is missing in customer metadata or customer is not a valid Customer', { status: 400 });
+        console.error('ibvId is missing in customer metadata or customer is not a valid Customer');
+        return new NextResponse('ibvId is missing in customer metadata or customer is not a valid Customer', { status: 400 });
       }
     } else {
       console.warn('Customer ID is missing or invalid in session.');
