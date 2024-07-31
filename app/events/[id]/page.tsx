@@ -34,14 +34,6 @@ async function fetchEvent(id: string): Promise<Event> {
 
 
 
-
-
-
-
-
-
-
-
 export default function EventPage({ params }: EventPageProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);

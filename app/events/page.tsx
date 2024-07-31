@@ -10,10 +10,10 @@ import style from "./indexEvent.module.css"
 
 export default function Events()  {
   const [events, setEvents] = useState<Event[]>([]);
-
+  const apiUrl = process.env.NEXT_PUBLIC_APP_URL;
 
   useEffect(() => {
-    fetch('/api/events')
+    fetch(`${apiUrl}/api/events`)
       .then(res => res.json())
       .then(data => setEvents(data));
   }, []);
