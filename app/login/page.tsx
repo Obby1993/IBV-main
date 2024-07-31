@@ -24,7 +24,7 @@ export default function LoginPage() {
     if (res?.error) {
       setError('Invalid credentials');
     } else {
-      router.push(`${process.env.NEXT_PUBLIC_URL}/events`);
+      router.push(`${process.env.NEXT_PUBLIC_APP_URL}/events`);
     }
   };
 
