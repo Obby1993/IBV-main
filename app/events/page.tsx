@@ -5,6 +5,7 @@ import React from "react";
 import Card from "../components/eventPart/card/CardEvent";
 import { Event } from "../types";
 import style from "./indexEvent.module.css";
+import { getUpcomingSortedEvents } from "@/lib/helpers"
 
 export default function Events() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -13,7 +14,8 @@ export default function Events() {
   const fetchEvents = async () => {
     const response = await fetch(`${apiUrl}/api/events`);
     const data = await response.json();
-    setEvents(data);
+    const SortedEvents = getUpcomingSortedEvents(data);
+    setEvents(SortedEvents);
   };
 
   useEffect(() => {

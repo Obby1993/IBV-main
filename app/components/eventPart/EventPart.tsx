@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import Card from "./card/CardEvent"
 import style from "./events.module.css"
 import  {Event}  from '../../types';
+import { getUpcomingSortedEvents } from "@/lib/helpers";
 
 
 type Props = {};
@@ -18,8 +19,8 @@ export default function EventPart() {
       .then(data => setEvents(data));
   }, []);
 
-  const selectedEvents = events.slice(0, 2);
-
+  const SortedEvents = getUpcomingSortedEvents(events);
+  const selectedEvents = SortedEvents.slice(0, 2);
   return(
   <div className={style.contenaire} >
     <h1 className="titre">Prochains Evénements</h1>
