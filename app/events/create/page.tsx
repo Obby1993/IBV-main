@@ -40,7 +40,8 @@ export default function Page({}: Props) {
 
   const addEvent = async () => {
     try {
-      const response = await fetch('/api/events/create', {
+      const apiUrl = process.env.NEXT_PUBLIC_APP_URL;
+      const response = await fetch(`${apiUrl}/api/events/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -20,7 +20,8 @@ export default function Events()  {
 
 
 
-
+ console.log(events);
+ 
   return (
       <div className={style.contener}>
         <h1 className='titre'>Nos événements</h1>

@@ -1,0 +1,24 @@
+color = ''
+project-name = 'string'
+[default]
+account_id = 'acct_1PQQlbIQBXDdXHob'
+device_name = 'OBA-MSI'
+display_name = 'Imagine Beach Volley'
+live_mode_api_key = 'rk_live_***********************************************************************************************h07f'
+live_mode_key_expires_at = '2024-10-29'
+live_mode_pub_key = 'pk_live_51PQQlbIQBXDdXHobC3mP4rnNkzURmJ3fnRoGrRvtQ72EDsiuRhhnWxYGCD9xTT8Me14TxhTBiVYjfa0t95z5pDLP00nPPlIu3U'
+test_mode_api_key = 'rk_test_51PQQlbIQBXDdXHobEg0CsW3R5LwlH5xvL5TvccpZ7sPny3BAub9hGHgJIB70bHwpBVXNNw9p0Do4pi5KKNfBMnZl00NmYjz2fO'
+test_mode_key_expires_at = '2024-10-29'
+test_mode_pub_key = 'pk_test_51PQQlbIQBXDdXHobppr3eRZUXlRiyAknffkdzlk2XNF9osbiTj1aMaQKlCNFS9YkpTf43LyJypjPIVEOpoY1RPg900ePq6tVsT'
+
+[string]
+account_id = 'acct_1PQQlbIQBXDdXHob'
+device_name = 'OBA-MSI'
+display_name = 'Imagine Beach Volley'
+live_mode_api_key = 'rk_live_***********************************************************************************************Kd9C'
+live_mode_key_expires_at = '2024-10-29'
+live_mode_pub_key = 'pk_live_51PQQlbIQBXDdXHobC3mP4rnNkzURmJ3fnRoGrRvtQ72EDsiuRhhnWxYGCD9xTT8Me14TxhTBiVYjfa0t95z5pDLP00nPPlIu3U'
+test_mode_api_key = 'rk_test_51PQQlbIQBXDdXHobBvrHkBlCNMXlazqbaJG7PeS8DBihLqWDyj3L4a6NvMZCAGSPzx17inpHscNXHtDXOyBdSbbU00OyTcmhWk'
+test_mode_key_expires_at = '2024-10-29'
+test_mode_pub_key = 'pk_test_51PQQlbIQBXDdXHobppr3eRZUXlRiyAknffkdzlk2XNF9osbiTj1aMaQKlCNFS9YkpTf43LyJypjPIVEOpoY1RPg900ePq6tVsT'
+

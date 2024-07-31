@@ -15,9 +15,11 @@ export async function POST(req: NextRequest) {
 
   const body = await req.text();
   // console.log("body:", body);
-
+  if (!process.env.STRIPE_WEBHOOK_SECRET) {
+    throw new Error("Stripe webhook secret is not defined in environment variables");
+  }
   try {
-    event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!);
+    event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET);
   } catch (err) {
     console.error('Webhook signature verification failed.');
     return new NextResponse(`Webhook Error: ${err instanceof Error ? err.message : 'Unknown error'}`, { status: 400 });
