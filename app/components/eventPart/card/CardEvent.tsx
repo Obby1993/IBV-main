@@ -10,28 +10,23 @@ interface CardProps  {
 };
 
 export default function Card({event}:CardProps) {
-  const [flipped, setFlipped] = useState(false);
-
+ 
  
 
   return(
     
-          <div className="card-compact w-96 bg-base-100 shadow-xl rounded-md">
-            <div className="rounded-tr-md rounded-tl-md bg-cover bg-no-repeat" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.5)), url(${event.imageUrl})`, height:`250px` }}>
-              <h2 className={`${style.dateStage} text-center `} >{new Date(event.dateStart).toLocaleDateString()} - {new Date(event.dateEnd).toLocaleDateString()}</h2>
-            </div>
-            <div className="card-body">
-              <h2 className="titreCard">{event.name}</h2>
-              <p>{event.description} - {event.autre}</p>
+    <div className="card-compact w-96 bg-base-100 shadow-xl rounded-md mb-3">
+      <div className="rounded-tr-md rounded-tl-md bg-cover bg-no-repeat" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.5)), url(${event.imageUrl})`, height:`250px` }}>
+        <h2 className={`${style.dateStage} text-center `} >{new Date(event.dateStart).toLocaleDateString()} - {new Date(event.dateEnd).toLocaleDateString()}</h2>
+      </div>
+      <div className="card-body">
+        <h2 className="titreCard">{event.name}</h2>
+        <p>{event.description} - {event.autre}</p>
 
-              <div className="card-actions justify-end">
-              <StyledLink href={`/events/${event.id}`}>Voir événement </StyledLink>
-              </div>
-            </div>
-          
-        
-        
-       
+        <div className="card-actions justify-end">
+        <StyledLink href={`/events/${event.id}`}>Voir événement </StyledLink>
+        </div>
+      </div>
     </div>
   );
 }

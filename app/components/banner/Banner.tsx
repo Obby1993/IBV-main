@@ -14,7 +14,7 @@ export default function Banner ({  }) {
     <div >
       <h1 className="titre">Imagine Beach Volley</h1>
       <div className="p-6">
-      <p className={styles.textBanner}>Bienvenue !  <br></br> Nous proposons des stages intensifs de beach-volley en France et à l'étranger, conçus pour vous faire progresser rapidement. <br></br>Rejoignez-nous pour vivre une expérience unique, encadrée par des professionnels du beach-volley, et améliorez vos compétences tout en découvrant de nouveaux horizons !!</p>
+      <p className={styles.textBanner}>Bienvenue !  <br></br> Nous proposons des stages intensifs de beach-volley en France et à l'étranger. <br></br>Rejoignez-nous pour vivre une expérience unique, encadrée par des professionnels du beach-volley, et améliorez vos compétences tout en découvrant de nouveaux horizons !!</p>
       <StyledLink href={"/events"}>Les Stages  IBV </StyledLink>
       <StyledLink href={"#section2"}>Les  Coachs </StyledLink>
       {session ? (<SignOutButton />)
