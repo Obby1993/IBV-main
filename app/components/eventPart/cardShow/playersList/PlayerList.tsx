@@ -16,19 +16,13 @@ export default function page({players}: Props) {
   const female = ["Femme","Female", "Féminin","femme","female", "féminin"]
   const male = ["Male", "Homme", "Masculin", "male", "homme", "masculin"]
   const playersFemale = filtrePlayers(players,  female )
-  // const playersFemaleNoPayed = filtrePlayers(players, false, female )
+  
   const playersMale = filtrePlayers(players,  male )
-  // const playersMaleNoPayed = filtrePlayers(players,  male )
-  // const listPlayersFemaleFiltred = [
-  //   { key: "Joueuses Inscrites:", value: playersFemalePayed },
-  //   { key: "Joueuses en attente de paiement:", value: playersFemaleNoPayed }]
-  // const listPlayersMaleFiltred = [
-  //   { key: "Joueurs inscrits:", value: playersMalePayed },
-  //   { key: "Joueurs en attente de paiement:", value: playersMaleNoPayed }];
+  
   return (
     <div className='mt-20'>
       <h2 className='titre mb-10'>Liste des Joueurs:</h2>
-      {/* {[...listPlayersFemaleFiltred, ...listPlayersMaleFiltred].map(group => ( */}
+     
          <div >
           <h3>Féminin</h3>
           <div className="overflow-x-auto mb-20">
@@ -45,7 +39,7 @@ export default function page({players}: Props) {
               <tbody>
                 {playersFemale.map((player, index) => (
 
-                  <tr key={player.id} className={` ${player.paiement ? 'bg-gray-500' : 'bg-red-100'}`}>
+                  <tr key={player.id} className={` ${player.paiement ? 'bg-green-500' : 'bg-red-100'}`}>
                     <th>{index + 1}</th>
                       <td>{player.name}</td>
                       <td>{player.niveau}</td>
