@@ -10,7 +10,7 @@ interface StyledLinkProps {
 const StyledLink: FC<StyledLinkProps> = ({ href, children }) => {
   return (
     <Link href={href}>
-      <button className="btn btn-outline btn-warning font-emoji mr-6">{children}</button> {/* Vous pouvez changer les classes CSS selon vos besoins */}
+      <button className="btn btn-outline btn-warning font-emoji cursor-none mr-6 ">{children}</button> {/* Vous pouvez changer les classes CSS selon vos besoins */}
     </Link>
   );
 };

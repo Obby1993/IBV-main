@@ -1,14 +1,15 @@
 .contenaire {
   /* width: 100vw;  Prend 100% de la largeur de la fenêtre */
   height: 100vh; /* Prend 100% de la hauteur de la fenêtre */
-
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)), url('/images/banner_img.jpg');
+  padding: 5%;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)),
+    url("/images/banner_img.jpg");
   background-size: cover; /* L'image couvre toute la div */
   background-position: center; /* Centrer l'image */
   background-repeat: no-repeat;
   display: flex;
-    justify-content: space-around;
-    align-items: center;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .textBanner {
@@ -16,5 +17,4 @@
   font-size: 25px;
   margin-bottom: 60px;
   width: 80%;
-
 }

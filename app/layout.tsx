@@ -6,7 +6,7 @@ import "./globals.css";
 import ClientLayout from "./components/ClientLayout";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from '@/app/config/authOptions';
-
+import React, { useEffect, useState } from "react";
 import { Session } from "next-auth";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -19,10 +19,17 @@ export const metadata: Metadata = {
 export default async function RootLayout({children}: Readonly<{ children: React.ReactNode }>) {
   const session: Session | null = await getServerSession(authOptions);
 
+
+
+  
+
+ 
+
   return (
     <html lang="en">
       <body className={inter.className}>
         <ClientLayout session={session}>{children}</ClientLayout>
+          
       </body>
     </html>
   );
