@@ -5,7 +5,7 @@ import { faMedal } from '@fortawesome/free-solid-svg-icons';
 import { TypeCoachData } from "@/app/types";
 import { motion } from "framer-motion";
 import { useInView } from '../../../hooks/useInView';  // Ajustez le chemin selon votre structure de fichiers
-
+import ScrollImage from "./scrollImage";
 interface CoachProps {
   coachData: TypeCoachData;
 }
@@ -31,11 +31,13 @@ export default function Coach({ coachData }: CoachProps) {
       <div className="hero place-items-start" key={coachData.id}>
         <div className="hero-content lg:flex-row align-top">
           <div style={{ width: '205px', height: '350px' }}>
-            <img
+          <ScrollImage
               src={coachData.picture}
+              alt="Coach Image"
               className="rounded-lg shadow-2xl"
               style={{ width: '300px', overflow: "hidden" }}
             />
+
           </div>
           <div style={{ width: '60%', height: '350px', verticalAlign: 'top' }}>
             <p

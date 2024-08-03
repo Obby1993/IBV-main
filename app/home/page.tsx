@@ -6,6 +6,7 @@ import Footer from "../components/footer/Footer";
 import coachesData from "../data/coaches.json";
 import { TypeCoachData } from "@/app/types";
 
+
 export default async function Home() {
 
 

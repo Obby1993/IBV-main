@@ -9,6 +9,7 @@ import { authOptions } from '@/app/config/authOptions';
 import React, { useEffect, useState } from "react";
 import { Session } from "next-auth";
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

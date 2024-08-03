@@ -66,7 +66,7 @@ export default function page({players}: Props) {
               <tbody>
                 {playersMale.map((player, index) => (
 
-                  <tr key={player.id} className={` ${player.paiement ? 'bg-gray-500' : 'bg-red-100'}`}>
+                  <tr key={player.id} className={` ${player.paiement ? 'bg-green-200' : 'bg-red-100'}`}>
                     <th>{index + 1}</th>
                       <td>{player.name}</td>
                       <td>{player.niveau}</td>
