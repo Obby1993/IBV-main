@@ -17,7 +17,7 @@ export default function Events() {
     console.log(data);
     
     const SortedEvents = getUpcomingSortedEvents(data);
-    setEvents(data);
+    setEvents(SortedEvents);
   };
 
   useEffect(() => {
