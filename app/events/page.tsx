@@ -5,7 +5,7 @@ import React from "react";
 import Card from "../components/eventPart/card/CardEvent";
 import { Event } from "../types";
 import style from "./indexEvent.module.css";
-// import { getUpcomingSortedEvents } from "@/lib/helpers"
+import { getUpcomingSortedEvents } from "@/lib/helpers"
 
 export default function Events() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -16,7 +16,7 @@ export default function Events() {
     const data = await response.json();
     console.log(data);
     
-    // const SortedEvents = getUpcomingSortedEvents(data);
+    const SortedEvents = getUpcomingSortedEvents(data);
     setEvents(data);
   };
 
