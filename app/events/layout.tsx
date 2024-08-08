@@ -17,15 +17,15 @@ const EventsLayout = async ({ children }: EventsLayoutProps) => {
   const session = await getServerSession(authOptions);
 
   return (
-    <html lang="en">
-      <body className={inter.className}>
+ 
         <ClientLayout session={session}>
+      <div className={inter.className}>
           <Navbar />
           {children}
           <Footer />
+      </div>
         </ClientLayout>
-      </body>
-    </html>
+    
   );
 };
 

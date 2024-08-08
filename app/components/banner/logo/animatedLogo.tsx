@@ -7,10 +7,10 @@ interface ScrollImageProps {
   alt: string;
   className?: string;
   style?: React.CSSProperties;
-  
+  // inView: boolean;
 }
 
-const ScrollImage: React.FC<ScrollImageProps> = ({ src, alt, className, style, inView }) => {
+const ScrollImage: React.FC<ScrollImageProps> = ({ src, alt, className, style }) => {
   return (
     <motion.img
       src={src}

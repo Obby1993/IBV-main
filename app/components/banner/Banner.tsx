@@ -5,23 +5,19 @@ import StyledLink from '../StyledLink';
 import SignOutButton from "../SignOutButton/SignOutBtn";
 import { useSession } from "next-auth/react";
 import AnimatedLogo from "./logo/animatedLogo";
-import TypingText from "./TypingText";
 
 export default function Banner ({  }) {
 
   const { data: session } = useSession()
-  const welcomeText = "Bienvenue ! <br> Nous proposons des stages intensifs de beach-volley en France et à l'étranger. <br> Rejoignez-nous pour vivre une expérience unique, encadrée par des professionnels du beach-volley, et améliorez vos compétences tout en découvrant de nouveaux horizons !!";
 
   return (<div className={styles.contenaire}>
     <div >
       <h1 className="titre">Imagine Beach Volley</h1>
       <div className="p-6">
-      <TypingText 
-            text={welcomeText}
-            speed={20} 
-            className={styles.textBanner}
-          />
-      {/* <p className={styles.textBanner}>Bienvenue !  <br></br> Nous proposons des stages intensifs de beach-volley en France et à l'étranger. <br></br>Rejoignez-nous pour vivre une expérience unique, encadrée par des professionnels du beach-volley, et améliorez vos compétences tout en découvrant de nouveaux horizons !!</p> */}
+     
+      <p className={styles.textBanner}>  Bienvenue ! <br/> Nous proposons des stages intensifs de beach-volley en France et à l'étranger. <br/> Rejoignez-nous pour vivre une expérience unique, encadrée par des professionnels du beach-volley, et améliorez vos compétences tout en découvrant de nouveaux horizons !!
+      </p>
+      
       <StyledLink href={"/events"}>Les Stages  IBV </StyledLink>
       <StyledLink href={"#section2"}>Les  Coachs </StyledLink>
       {session ? (<SignOutButton />)
