@@ -31,6 +31,7 @@ body {
     text-wrap: balance;
   }
 }
+
 .titre {
   color: #fda63a;
   font-size: 60px;
@@ -38,7 +39,11 @@ body {
   font-family: emoji;
   padding-left: 1.5rem;
 }
-
+@media (max-width: 640px) {
+  .titre {
+    font-size: 40px;
+  }
+}
 .titreCard {
   color: #fda63a;
   font-size: 20px;

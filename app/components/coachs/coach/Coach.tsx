@@ -6,6 +6,7 @@ import { TypeCoachData } from "@/app/types";
 import { motion } from "framer-motion";
 import { useInView } from '../../../hooks/useInView';  // Ajustez le chemin selon votre structure de fichiers
 import ScrollImage from "./scrollImage";
+import style from "../coachs.module.css"
 interface CoachProps {
   coachData: TypeCoachData;
 }
@@ -26,7 +27,7 @@ const listItemVariants = {
 export default function Coach({ coachData }: CoachProps) {
   const { ref, inView } = useInView({ threshold: 0.1 });
   return (
-    <div>
+    <div className={style.coach}>
       <h1 className="titre">{coachData.name}</h1>
       <div className="hero place-items-start" key={coachData.id}>
         <div className="hero-content lg:flex-row align-top">
@@ -41,9 +42,8 @@ export default function Coach({ coachData }: CoachProps) {
           </div>
           <div style={{ width: '60%', height: '350px', verticalAlign: 'top' }}>
             <p
-              className="pb-6 text-white text-justify"
-              style={{ height: '175px' }}
-            >
+              className="pb-6 text-white text-justify mb-3"
+              style={{ height: '175px' }}            >
               {coachData.devise}
             </p>
             <h2

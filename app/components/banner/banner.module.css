@@ -1,20 +1,47 @@
 .contenaire {
   /* width: 100vw;  Prend 100% de la largeur de la fenêtre */
-  height: 100vh; /* Prend 100% de la hauteur de la fenêtre */
+  height: 100%; /* Prend 100% de la hauteur de la fenêtre */
   padding: 5%;
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)),
     url("/images/banner_img.jpg");
   background-size: cover; /* L'image couvre toute la div */
   background-position: center; /* Centrer l'image */
   background-repeat: no-repeat;
+}
+
+.textLogo {
   display: flex;
+  flex-direction: row-reverse;
   justify-content: space-around;
   align-items: center;
 }
-
 .textBanner {
   color: white;
   font-size: 25px;
   margin-bottom: 60px;
   width: 80%;
+}
+
+@media (max-width: 768px) {
+  .textBanner {
+    color: white;
+    font-size: 15px;
+    margin-bottom: 60px;
+    width: 100%;
+  }
+
+  .contenaire {
+    padding-top: 60px;
+  }
+  .textLogo {
+    display: block;
+    /* justify-content: space-around;
+    align-items: center; */
+  }
+
+  .logo {
+    width: 150px;
+    margin: auto;
+    margin-top: 50px;
+  }
 }

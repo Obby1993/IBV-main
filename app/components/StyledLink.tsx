@@ -4,13 +4,14 @@ import { FC, ReactNode } from 'react';
 
 interface StyledLinkProps {
   href: string;
+  className: string;
   children: ReactNode;
 }
 
-const StyledLink: FC<StyledLinkProps> = ({ href, children }) => {
+const StyledLink: FC<StyledLinkProps> = ({ href, children, className }) => {
   return (
-    <Link href={href}>
-      <button className="btn btn-outline btn-warning font-emoji cursor-none mr-6 ">{children}</button> {/* Vous pouvez changer les classes CSS selon vos besoins */}
+    <Link href={href} className={className}>
+      <button className="btn btn-outline btn-warning font-emoji cursor-none  ">{children}</button> {/* Vous pouvez changer les classes CSS selon vos besoins */}
     </Link>
   );
 };

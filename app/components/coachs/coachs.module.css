@@ -1,6 +1,6 @@
 .contener {
   /* width: 100vw; */
-  /* height: 100vh; */
+  height: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -9,4 +9,15 @@
   background-color: rgb(13, 16, 49);
   padding: 1%;
   padding-bottom: 5%;
+}
+
+.coach {
+  height: 100%;
+  margin-bottom: 50px;
+}
+@media (max-width: 1024px) {
+  .contener {
+    display: block;
+    font-size: 15px;
+  }
 }

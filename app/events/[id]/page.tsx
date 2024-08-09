@@ -20,6 +20,7 @@ interface EventPageProps {
 async function fetchEvent(id: string): Promise<Event> {
   const apiUrl = process.env.NEXT_PUBLIC_APP_URL;
   const res = await fetch(`${apiUrl}/api/events/${id}`);
+  // const res = await fetch(`/api/events/${id}`);
   console.log(id);
 
   if (!res.ok) {
@@ -80,7 +81,8 @@ export default function EventPage({ params }: EventPageProps) {
    
     try { 
       const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/events/${event.id}`,
-      {
+      // const response = await fetch(`/api/events/${event.id}`,
+        {
         method: 'DELETE',
       });
       const data = await response.json();

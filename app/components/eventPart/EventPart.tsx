@@ -4,7 +4,8 @@ import {useEffect, useState} from "react";
 import Card from "./card/CardEvent"
 import style from "./events.module.css"
 import  {Event}  from '../../types';
-import { getUpcomingSortedEvents } from "@/lib/helpers";
+import StyledLink from '../StyledLink';
+// import { getUpcomingSortedEvents } from "@/lib/helpers";
 
 
 type Props = {};
@@ -19,16 +20,20 @@ export default function EventPart() {
       .then(data => setEvents(data));
   }, []);
 
-  const SortedEvents = getUpcomingSortedEvents(events);
-  const selectedEvents = SortedEvents.slice(0, 2);
+  // const SortedEvents = getUpcomingSortedEvents(events);
+  // const selectedEvents = SortedEvents.slice(0, 2);
   return(
   <div className={style.contenaire} >
     <h1 className="titre">Prochains Evénements</h1>
-        <div className=" flex justify-around items-center gap-4">
-          {selectedEvents.map(event => (
-            <Card key={event.id} event={event} />
-          ))}
-        </div>
+      <div className=" md:flex justify-around items-center gap-4 mt-8">
+        {/* {selectedEvents.map(event => ( */}
+        {events.map(event => (
+          <Card key={event.id} event={event} />
+        ))}
+      </div>
+      <div className=" flex justify-around m-8">
+        <StyledLink href={"/events"} className="">Les Stages  IBV </StyledLink>
+      </div>
   </div>
 
   )

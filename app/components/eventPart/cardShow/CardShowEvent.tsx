@@ -39,11 +39,15 @@ export default function cardShow({eventData} : CardShow) {
       {/* <div className="bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${eventData.imageUrl})` }}> */}
       <div className="card-body p-0">
         <div className="rounded-tr-md rounded-tl-md bg-cover bg-no-repeat " style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${eventData.imageUrl})`, height:`500px` }}>
-          <div className='flex items-center justify-around p-5'>
-            <h2 className="titre">{eventData.name}</h2>
+          <div className=' flex flex-col md:flex-row items-center justify-around p-5'>
+            <h2 className="titre mb-6 p-0">{eventData.name}</h2>
             <h2 className={style.dateStage}>{new Date(eventData.dateStart).toLocaleDateString()} - {new Date(eventData.dateEnd).toLocaleDateString()}</h2>
           </div>
-          <div className="card-actions justify-center  mt-64" >
+          <div className='m-10 text-white text-center text-xl'>
+            <p>{eventData.autre}</p>
+            <p>{eventData.description}</p>
+          </div>
+          <div className="card-actions justify-center mt-24" >
             <Link href={`/events/${eventData.id}/register`} className="btn btn-warning font-emoji content-center text-xl p-5 border-blue-900 text-blue-900" >Je m'inscris !</Link>
           </div>
         </div>
@@ -54,10 +58,7 @@ export default function cardShow({eventData} : CardShow) {
             <p> <span className='text-4xl w-[20%] h-[72px]'> {womenPlaceDIspo} </span> en féminin </p>
             <p><span className='text-4xl w-[20%]'> {menPlaceDIspo}</span> en masculin</p>
           </div>
-          <div className='mb-10'>
-            <p>{eventData.autre}</p>
-            <p>{eventData.description}</p>
-          </div>
+          
           <PlayerList players={eventData.players} />
         </div>
       </div>
