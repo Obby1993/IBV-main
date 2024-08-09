@@ -24,7 +24,7 @@ export default function Card({event}:CardProps) {
         <p>{event.description} - {event.autre}</p>
 
         <div className="card-actions justify-end">
-        <StyledLink href={`/events/${event.id}`}>Voir événement </StyledLink>
+        <StyledLink href={`/events/${event.id}`} className={""}>Voir événement </StyledLink>
         </div>
       </div>
     </div>
