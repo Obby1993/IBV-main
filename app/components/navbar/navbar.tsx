@@ -49,13 +49,13 @@ export default function navbar() {
         <ul className="menu menu-horizontal p-0">
         {navItems.map((link, index) => (
           <li key={index}>
-            <StyledLink href={link.href}>{link.label} </StyledLink>
+            <StyledLink href={link.href} className={''}>{link.label} </StyledLink>
           </li>
           ))}
-          {session ? <>(<li><StyledLink href={'/events/create'}>Créer un stage </StyledLink></li>
+          {session ? <>(<li><StyledLink href={'/events/create'} className={''}>Créer un stage </StyledLink></li>
                       <li className='pt-2'><SignOutButton /></li>
                       <li className='titreCard mt-5'>{session.user?.name} est connecté. </li>)</>
-            :        (<li><StyledLink href={"/login"}> Connexion</StyledLink></li>)}
+            :        (<li><StyledLink href={"/login"} className={''}> Connexion</StyledLink></li>)}
 
         </ul>
      </div>
