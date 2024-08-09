@@ -26,9 +26,9 @@ export default function Events() {
   return (
     <div className={style.contener}>
       <h1 className='titre'>Nos événements</h1>
-      <ul className='flex-col sm:flex flex-wrap justify-around align-middle p-5'>
+      <ul className=' flex flex-col sm:flex-row flex-wrap justify-around align-middle p-5'>
         {events.map(event => (
-          <li key={event.id}>
+          <li key={event.id} className='m-5'>
             <Card event={event} />
           </li>
         ))}

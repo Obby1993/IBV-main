@@ -28,11 +28,16 @@ const nbGenrePlaceDispo = (players:Player[], placeGenre:number, genres: string[]
   return genreRest
 }
 
+
+
 export default function cardShow({eventData} : CardShow) {
 
-  const womenPlaceDIspo = nbGenrePlaceDispo(eventData.players, eventData.numberPlaceWomen, ["Femme","Female", "Féminin","femme","female", "féminin"])
-  const menPlaceDIspo = nbGenrePlaceDispo(eventData.players, eventData.numberPlaceMen, ["Male", "Homme", "Masculin", "male", "homme", "masculin"])
-
+  const womenPlaceDispo = nbGenrePlaceDispo(eventData.players, eventData.numberPlaceWomen, ["Femme","Female", "Féminin","femme","female", "féminin"])
+  const menPlaceDispo = nbGenrePlaceDispo(eventData.players, eventData.numberPlaceMen, ["Male", "Homme", "Masculin", "male", "homme", "masculin"])
+ 
+  const registration = (womenPlaceDispo + menPlaceDispo) >= 0;
+    
+     
 
   return (
     <div className="card bg-base-100 shadow-xl ">
@@ -48,15 +53,19 @@ export default function cardShow({eventData} : CardShow) {
             <p>{eventData.description}</p>
           </div>
           <div className="card-actions justify-center mt-24" >
-            <Link href={`/events/${eventData.id}/register`} className="btn btn-warning font-emoji content-center text-xl p-5 border-blue-900 text-blue-900" >Je m'inscris !</Link>
+          <Link href={registration ? `/events/${eventData.id}/register` : "#"}
+              className={`btn font-emoji content-center text-xl p-5 border-blue-900 text-blue-900 ${!registration ? ' cursor-not-allowed' : 'btn-warning'}`}
+              aria-disabled={!registration}>
+              {registration ? "Je m'inscris !" : "Inscription fermée"}
+            </Link>
           </div>
         </div>
         <div className='p-7'>
           <h3> Lieu: <span className='text-xl font-semibold w-[30%]'>{eventData.location?.street} - {eventData.location?.state} {eventData.location?.city}</span></h3>
           <div className={style.disponibilite}>
             <p><span className='text-7xl font-semibold w-[30%]' >{eventData.numberPlaceMen + eventData.numberPlaceWomen - eventData.players.length}</span> Places restantes / {eventData.numberPlaceMen + eventData.numberPlaceWomen}</p>
-            <p> <span className='text-4xl w-[20%] h-[72px]'> {womenPlaceDIspo} </span> en féminin </p>
-            <p><span className='text-4xl w-[20%]'> {menPlaceDIspo}</span> en masculin</p>
+            <p> <span className='text-4xl w-[20%] h-[72px]'> {womenPlaceDispo} </span> en féminin </p>
+            <p><span className='text-4xl w-[20%]'> {menPlaceDispo}</span> en masculin</p>
           </div>
           
           <PlayerList players={eventData.players} />

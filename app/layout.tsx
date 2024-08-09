@@ -15,6 +15,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Imagine Beach Volley",
   description: "Organisation de stage de beach volley en France et à l'étranger. ",
+  icons: {
+    icon: '/images/logo_ibv.png', // Chemin vers votre favicon
+  },
 };
 
 export default async function RootLayout({children}: Readonly<{ children: React.ReactNode }>) {
@@ -28,6 +31,9 @@ export default async function RootLayout({children}: Readonly<{ children: React.
 
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/images/logo_ibv.png"/>
+      </head>
       <body className={inter.className}>
         <ClientLayout session={session}>{children}</ClientLayout>
           
