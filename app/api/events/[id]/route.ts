@@ -3,12 +3,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import { Event } from "../../../types";
-
+import Cors from '@/lib/cors';
 
 const prisma = new PrismaClient();
 
 //méthode GET
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest, res:NextResponse, { params }: { params: { id: string } }) {
+  await Cors (req, res);
   const { id } = params;
 
   if (typeof id !== 'string') {
@@ -28,6 +29,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     }
 
     return NextResponse.json(event, { status: 200 });
+  
   } catch (err) {
     console.error('Error fetching event:', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
