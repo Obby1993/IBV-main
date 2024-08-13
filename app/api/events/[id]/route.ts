@@ -1,19 +1,19 @@
 // app/api/events/[id]/route.ts
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
-import { Event } from "../../../types";
+
 import Cors from '@/lib/cors';
 
 const prisma = new PrismaClient();
 
 //méthode GET
-export async function GET(req: NextRequest, res:NextResponse, { params }: { params: { id: string } }) {
+export async function GET(req: NextApiRequest, res:NextApiResponse, { params }: { params: { id: string } }) {
   await Cors (req, res);
   const { id } = params;
 
   if (typeof id !== 'string') {
-    return NextResponse.json({ error: 'Invalid ID format' }, { status: 400 });
+    return Response.json({ error: 'Invalid ID format' }, { status: 400 });
   }
 
   try {
@@ -25,23 +25,23 @@ export async function GET(req: NextRequest, res:NextResponse, { params }: { para
     });
 
     if (!event) {
-      return NextResponse.json({ error: 'Event not found' }, { status: 404 });
+      return Response.json({ error: 'Event not found' }, { status: 404 });
     }
 
-    return NextResponse.json(event, { status: 200 });
+    return Response.json(event, { status: 200 });
   
   } catch (err) {
     console.error('Error fetching event:', err);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return Response.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
 // Méthode PUT
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextApiRequest, { params }: { params: { id: string } }) {
   const { id } = params;
-  const { name, description, dateStart, dateEnd, numberPlaceMen, numberPlaceWomen, autre, players,location } = await req.json();
+  const { name, description, dateStart, dateEnd, numberPlaceMen, numberPlaceWomen, autre, players,location } = await req.body;
   if (typeof id !== 'string') {
-    return NextResponse.json({ error: 'Invalid ID format' }, { status: 400 });
+    return Response.json({ error: 'Invalid ID format' }, { status: 400 });
   }
   try {
 
@@ -72,10 +72,10 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       }
     });
     console.log('Updated event:', updatedEvent);
-    return NextResponse.json(updatedEvent, { status: 200 });
+    return Response.json(updatedEvent, { status: 200 });
   } catch (err) {
     console.error('Error updating event:', err);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return Response.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -96,12 +96,12 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     });
 
     if (!deletedEvent) {
-      return NextResponse.json({ error: 'Event not found' }, { status: 404 });
+      return Response.json({ error: 'Event not found' }, { status: 404 });
     }
 
-    return NextResponse.json({ message: 'Event deleted successfully' }, { status: 200 });
+    return Response.json({ message: 'Event deleted successfully' }, { status: 200 });
   } catch (error) {
     console.error('Error deleting event:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return Response.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
