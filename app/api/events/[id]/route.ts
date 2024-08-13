@@ -1,6 +1,6 @@
 // app/api/events/[id]/route.ts
 
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
 import Cors from '@/lib/cors';
@@ -8,7 +8,7 @@ import Cors from '@/lib/cors';
 const prisma = new PrismaClient();
 
 //méthode GET
-export async function GET(req: NextApiRequest, res:NextApiResponse, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest, res:NextResponse, { params }: { params: { id: string } }) {
   await Cors (req, res);
   const { id } = params;
 
