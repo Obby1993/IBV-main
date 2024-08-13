@@ -1,26 +1,27 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import Stripe from 'stripe';
 import { revalidatePath } from 'next/cache';
-import { getSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
 const prisma = new PrismaClient();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: '2024-04-10',
 });
 
-export async function POST(req: NextApiRequest, res:NextApiResponse) {
-  const session = await getSession({ req });
+export async function POST(req: NextRequest, res: NextResponse) {
+  const session =  useSession();
 
   if (!session) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+
   try {
-    const bodyText = await req.body;
+    const bodyText = await req.text();
     console.log('Received body:', bodyText);
 
     if (!bodyText) {
-      return Response.json({ error: 'Request body is empty' }, { status: 400 });
+      return NextResponse.json({ error: 'Request body is empty' }, { status: 400 });
     }
 
     const { name, dateStart, dateEnd, location, description, numberPlaceMen, numberPlaceWomen, autre, players, imageUrl, price } = JSON.parse(bodyText);
@@ -85,9 +86,9 @@ export async function POST(req: NextApiRequest, res:NextApiResponse) {
     console.log('New event created:', newEvent);
     revalidatePath('/events');
 
-    return Response.json(newEvent, { status: 201 });
+    return NextResponse.json(newEvent, { status: 201 });
   } catch (error) {
     console.error('Error creating event:', error);
-    return Response.json({ error: 'Failed to create event' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to create event' }, { status: 500 });
   }
 }
