@@ -7,32 +7,10 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-// CORS middleware
-function handleCors(req: NextRequest, res: NextResponse) {
-  res.headers.set("Access-Control-Allow-Origin", 'https://www.imagine-beach-volley.com');
-  res.headers.set(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, OPTIONS"
-  );
-  res.headers.set(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization"
-  );
-  if (req.method === "OPTIONS") {
-    return new NextResponse(null, { status: 200 });
-  }
-  return false;
-}
+
 
 //méthode GET
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
-
-  const res = NextResponse.next();
-  if (handleCors(req, res)) {
-    return res;
-  }
-
-
   const { id } = params;
 
   if (typeof id !== 'string') {
