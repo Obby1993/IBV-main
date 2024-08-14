@@ -5,6 +5,7 @@ import { PrismaClient } from '@prisma/client';
 
 
 
+
 const prisma = new PrismaClient();
 export async function OPTIONS(req: NextRequest) {
   const headers = new Headers();
@@ -45,47 +46,48 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 }
 
 // Méthode PUT
-// export async function PUT(req: NextApiRequest, { params }: { params: { id: string } }) {
-//   const { id } = params;
-//   const { name, description, dateStart, dateEnd, numberPlaceMen, numberPlaceWomen, autre, players,location } = await req.body;
-//   if (typeof id !== 'string') {
-//     return Response.json({ error: 'Invalid ID format' }, { status: 400 });
-//   }
-//   try {
+export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+  const { id } = params;
+  const body = await req.json();
+  const { name, description, dateStart, dateEnd, numberPlaceMen, numberPlaceWomen, autre, players,location } = body;
+  if (typeof id !== 'string') {
+    return Response.json({ error: 'Invalid ID format' }, { status: 400 });
+  }
+  try {
 
-//     const updatedEvent = await prisma.event.update({
-//       where: { id: id },
-//       data: {
-//         name,
-//         description,
-//         location:{
-//           city:location.city,
-//           state:location.state,
-//           street: location.street,
-//           zip: location.zip
-//         },
-//         dateStart: new Date(dateStart),
-//         dateEnd: new Date(dateEnd),
-//         numberPlaceMen: Number(numberPlaceMen),
-//         numberPlaceWomen: Number(numberPlaceWomen),
-//         autre,
-//         players: {
-//           create: players.map((player: any) => ({
-//             name: player.name,
-//             paiement: player.paiement,
-//             niveau: player.niveau,
-//             genre: player.genre,
-//           })),
-//         }
-//       }
-//     });
-//     console.log('Updated event:', updatedEvent);
-//     return Response.json(updatedEvent, { status: 200 });
-//   } catch (err) {
-//     console.error('Error updating event:', err);
-//     return Response.json({ error: 'Internal server error' }, { status: 500 });
-//   }
-// }
+    const updatedEvent = await prisma.event.update({
+      where: { id: id },
+      data: {
+        name,
+        description,
+        location:{
+          city:location.city,
+          state:location.state,
+          street: location.street,
+          zip: location.zip
+        },
+        dateStart: new Date(dateStart),
+        dateEnd: new Date(dateEnd),
+        numberPlaceMen: Number(numberPlaceMen),
+        numberPlaceWomen: Number(numberPlaceWomen),
+        autre,
+        players: {
+          create: players.map((player: any) => ({
+            name: player.name,
+            paiement: player.paiement,
+            niveau: player.niveau,
+            genre: player.genre,
+          })),
+        }
+      }
+    });
+    console.log('Updated event:', updatedEvent);
+    return Response.json(updatedEvent, { status: 200 });
+  } catch (err) {
+    console.error('Error updating event:', err);
+    return Response.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}
 
 
 
