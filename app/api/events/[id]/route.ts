@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 
 // CORS middleware
 function handleCors(req: NextRequest, res: NextResponse) {
-  res.headers.set("Access-Control-Allow-Origin", "*");
+  res.headers.set("Access-Control-Allow-Origin", 'https://www.imagine-beach-volley.com');
   res.headers.set(
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, DELETE, OPTIONS"
