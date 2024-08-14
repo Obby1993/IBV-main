@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import Stripe from 'stripe';
 import { revalidatePath } from 'next/cache';
-import { useSession } from 'next-auth/react';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/config/authOptions';
 
 const prisma = new PrismaClient();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
@@ -10,11 +11,11 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 });
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  const session =  useSession();
-
+  const session = await getServerSession(authOptions);
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+
 
   try {
     const bodyText = await req.text();
@@ -25,6 +26,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
 
     const { name, dateStart, dateEnd, location, description, numberPlaceMen, numberPlaceWomen, autre, players, imageUrl, price } = JSON.parse(bodyText);
+    if (!name || !dateStart || !dateEnd || !location || !description || !price) {
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    }
     console.log('Parsed data:', { name, dateStart, dateEnd, location, description, numberPlaceMen, numberPlaceWomen, autre, players, imageUrl, price });
 
     //image par default
