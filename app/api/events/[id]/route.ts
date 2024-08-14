@@ -3,13 +3,36 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
-import Cors from '@/lib/cors';
+
 
 const prisma = new PrismaClient();
 
+// CORS middleware
+function handleCors(req: NextRequest, res: NextResponse) {
+  res.headers.set("Access-Control-Allow-Origin", "*");
+  res.headers.set(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS"
+  );
+  res.headers.set(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization"
+  );
+  if (req.method === "OPTIONS") {
+    return new NextResponse(null, { status: 200 });
+  }
+  return false;
+}
+
 //méthode GET
-export async function GET(req: NextRequest, res:NextResponse, { params }: { params: { id: string } }) {
-  await Cors (req, res);
+export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+
+  const res = NextResponse.next();
+  if (handleCors(req, res)) {
+    return res;
+  }
+
+
   const { id } = params;
 
   if (typeof id !== 'string') {
@@ -37,47 +60,47 @@ export async function GET(req: NextRequest, res:NextResponse, { params }: { para
 }
 
 // Méthode PUT
-export async function PUT(req: NextApiRequest, { params }: { params: { id: string } }) {
-  const { id } = params;
-  const { name, description, dateStart, dateEnd, numberPlaceMen, numberPlaceWomen, autre, players,location } = await req.body;
-  if (typeof id !== 'string') {
-    return Response.json({ error: 'Invalid ID format' }, { status: 400 });
-  }
-  try {
+// export async function PUT(req: NextApiRequest, { params }: { params: { id: string } }) {
+//   const { id } = params;
+//   const { name, description, dateStart, dateEnd, numberPlaceMen, numberPlaceWomen, autre, players,location } = await req.body;
+//   if (typeof id !== 'string') {
+//     return Response.json({ error: 'Invalid ID format' }, { status: 400 });
+//   }
+//   try {
 
-    const updatedEvent = await prisma.event.update({
-      where: { id: id },
-      data: {
-        name,
-        description,
-        location:{
-          city:location.city,
-          state:location.state,
-          street: location.street,
-          zip: location.zip
-        },
-        dateStart: new Date(dateStart),
-        dateEnd: new Date(dateEnd),
-        numberPlaceMen: Number(numberPlaceMen),
-        numberPlaceWomen: Number(numberPlaceWomen),
-        autre,
-        players: {
-          create: players.map((player: any) => ({
-            name: player.name,
-            paiement: player.paiement,
-            niveau: player.niveau,
-            genre: player.genre,
-          })),
-        }
-      }
-    });
-    console.log('Updated event:', updatedEvent);
-    return Response.json(updatedEvent, { status: 200 });
-  } catch (err) {
-    console.error('Error updating event:', err);
-    return Response.json({ error: 'Internal server error' }, { status: 500 });
-  }
-}
+//     const updatedEvent = await prisma.event.update({
+//       where: { id: id },
+//       data: {
+//         name,
+//         description,
+//         location:{
+//           city:location.city,
+//           state:location.state,
+//           street: location.street,
+//           zip: location.zip
+//         },
+//         dateStart: new Date(dateStart),
+//         dateEnd: new Date(dateEnd),
+//         numberPlaceMen: Number(numberPlaceMen),
+//         numberPlaceWomen: Number(numberPlaceWomen),
+//         autre,
+//         players: {
+//           create: players.map((player: any) => ({
+//             name: player.name,
+//             paiement: player.paiement,
+//             niveau: player.niveau,
+//             genre: player.genre,
+//           })),
+//         }
+//       }
+//     });
+//     console.log('Updated event:', updatedEvent);
+//     return Response.json(updatedEvent, { status: 200 });
+//   } catch (err) {
+//     console.error('Error updating event:', err);
+//     return Response.json({ error: 'Internal server error' }, { status: 500 });
+//   }
+// }
 
 
 
