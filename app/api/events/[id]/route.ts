@@ -6,7 +6,14 @@ import { PrismaClient } from '@prisma/client';
 
 
 const prisma = new PrismaClient();
+export async function OPTIONS(req: NextRequest) {
+  const headers = new Headers();
+  headers.set('Access-Control-Allow-Origin', 'https://www.imagine-beach-volley.com');
+  headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
+  return new NextResponse(null, { headers });
+}
 
 
 //méthode GET

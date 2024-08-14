@@ -1,10 +1,12 @@
+// lib/init-middleware.ts
+
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(req: NextRequest) {
   const origin = req.headers.get('origin');
 
-  // Autoriser les requêtes provenant de votre domaine
+  // Vérifie si l'origine est autorisée
   if (origin === 'https://www.imagine-beach-volley.com') {
     const res = NextResponse.next();
     res.headers.set('Access-Control-Allow-Origin', 'https://www.imagine-beach-volley.com');
@@ -14,7 +16,7 @@ export function middleware(req: NextRequest) {
   }
 
   // Bloquez toutes les autres origines
-  return NextResponse.rewrite(new URL('/api/error', req.url));
+  return new NextResponse('Blocked by CORS policy', { status: 403 });
 }
 
 export const config = {
