@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import Modal from '../../components/modal/Modal'; // Assurez-vous d'ajuster le chemin selon votre structure de fichiers
 import Link from 'next/link';
 import { useSession } from "next-auth/react";
-
+import { revalidatePath } from 'next/cache';
 
 interface EventPageProps {
   params: {
@@ -43,6 +43,7 @@ export default function EventPage({ params }: EventPageProps) {
   const [event, setEvent] = useState<Event | null>(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [success, setSuccess] = useState(false)
+  // const [events, setEvents] = useState<Event[]>([]);
   const { data: session } = useSession()
 
   useEffect(() => {
@@ -90,7 +91,8 @@ export default function EventPage({ params }: EventPageProps) {
       setSuccessMessage('Event deleted successfully');
 
       // Redirect to the events page after successful deletion
-      router.push(`/events`);
+      revalidatePath('/events');
+      // router.push(`/events`);
     } catch (error) {
       console.error('Error deleting event:', error);
       setError('Failed to delete event');

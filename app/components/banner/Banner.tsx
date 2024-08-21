@@ -15,7 +15,8 @@ export default function Banner ({  }) {
     <div className={styles.textLogo}>
     <AnimatedLogo src="/images/logo_ibv.png" alt="Logo" className= {styles.logo} />
       <div className="p-6">
-        <p className={styles.textBanner} >  Bienvenue ! <br/> Nous proposons des stages intensifs de beach-volley en France et à l'étranger. <br/> Rejoignez-nous pour vivre une expérience unique, encadrée par des professionnels du beach-volley, et améliorez vos compétences tout en découvrant de nouveaux horizons !!</p>
+        <p className={styles.textBanner} >  Bienvenue chez Imagine Beach Volley ! <br/> Nous sommes une association promouvant le beach volley, par des initiations, des prises de paroles et des entrainements ! <br></br>
+        Nous proposons aussi  des stages intensifs de beach-volley en France et à l'étranger. <br/> Rejoignez-nous pour vivre une expérience unique, encadrée par des professionnels du beach-volley, et améliorez vos compétences tout en découvrant de nouveaux horizons !!</p>
         <div className="hidden sm:block">
 
         <StyledLink href={"/events"} className={"mr-8"}>Les Stages  IBV </StyledLink>
