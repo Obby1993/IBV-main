@@ -1,20 +1,39 @@
 .head {
   display: flex;
   justify-content: space-between;
-  align-items: center
+  align-items: center;
 }
 
 .dateStage {
-  height:40px;
+  height: 40px;
   padding: 4px 20px 4px 20px;
   border: solid;
   border-radius: 0.375rem;
   border-width: 2px;
-  border-color:rgb(255,190,0);
-  background-color: rgb(13,16,49);
-  color:rgb(255,190,0);
+  border-color: rgb(255, 190, 0);
+  background-color: rgb(13, 16, 49);
+  color: rgb(255, 190, 0);
   font-weight: bold;
-  width: auto
+  width: auto;
+}
+
+.displayPrice {
+  width: 12rem;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 100px;
+  color: #fda63a;
+  font-size: 60px;
+  font-weight: 500;
+  font-family: emoji;
+  border: solid;
+  border-color: #fda63a;
+  border-radius: 100%;
+  position: absolute;
+  bottom: 88px;
+  right: 150px;
+  background-color: rgb(13, 16, 48);
+  border-width: 2px;
 }
 
 .disponibilite {
@@ -23,5 +42,5 @@
   align-items: baseline;
   color: rgb(13, 16, 49);
   text-align: center;
-  margin: 35px 0px 35px 0px
+  margin: 35px 0px 35px 0px;
 }
