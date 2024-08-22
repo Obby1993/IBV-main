@@ -10,6 +10,7 @@ import { getUpcomingSortedEvents } from "@/lib/helpers"
 export default function Events() {
   const [events, setEvents] = useState<Event[]>([]);
   const apiUrl = process.env.NEXT_PUBLIC_APP_URL;
+  
   const fetchEvents = async () => {
     const response = await fetch(`${apiUrl}/api/events`);
     const data = await response.json();

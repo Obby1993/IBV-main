@@ -15,8 +15,12 @@ export async function GET() {
         players: true, // Inclure les joueurs associés à chaque événement
       },
     });
+    console.log("Events fetched:", events); 
     return NextResponse.json(events);
+   
   } catch (error) {
+    console.error("Failed to fetch events:", error);
     return NextResponse.json({ error: 'Failed to fetch events' }, { status: 500 });
+    
   }
 }
