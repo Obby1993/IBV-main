@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: "Imagine Beach Volley",
   description: "Organisation de stage de beach volley en France et à l'étranger. ",
   icons: {
-    icon: '/images/logo_ibv.png', // Chemin vers votre favicon
+    icon: '../public/images/logo_ibv.png', // Chemin vers votre favicon
   },
 };
 
