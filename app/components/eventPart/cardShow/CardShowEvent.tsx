@@ -69,7 +69,7 @@ export default function cardShow({eventData} : CardShow) {
             <p><span className='text-4xl w-[20%]'> {menPlaceDispo}</span> en masculin</p>
           </div>
           
-          <PlayerList players={eventData.players} />
+          <PlayerList initialPlayers={eventData.players} />
         </div>
       </div>
 

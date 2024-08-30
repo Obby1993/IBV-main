@@ -1,13 +1,14 @@
 "use client"
-import { Event } from "../../types";
-import CardShow from "../../components/eventPart/cardShow/CardShowEvent";
-import { useState, useEffect } from 'react';
-import style from "../indexEvent.module.css";
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Modal from '../../components/modal/Modal'; // Assurez-vous d'ajuster le chemin selon votre structure de fichiers
-import Link from 'next/link';
-import { useSession } from "next-auth/react";
-
+import { useSession } from 'next-auth/react';
+import { Event } from '../../types';
+import CardShow from '../../components/eventPart/cardShow/CardShowEvent';
+import Btns from '../../components/eventPart/cardShow/btns/Btns';
+import Modal from '../../components/modal/Modal';
+import { useModal } from '@/app/hooks/ModalLogic';
+import { useLoading } from '@/app/hooks/useLoading';
+import style from '../indexEvent.module.css';
 
 interface EventPageProps {
   params: {
@@ -15,113 +16,65 @@ interface EventPageProps {
   };
 }
 
-
-// Récupération des données de l'événement
 async function fetchEvent(id: string): Promise<Event> {
-  const apiUrl = process.env.NEXT_PUBLIC_APP_URL;
-  const res = await fetch(`${apiUrl}/api/events/${id}`);
-  // const res = await fetch(`/api/events/${id}`);
-  console.log(id);
-
+  const res = await fetch(`/api/events/${id}`);
   if (!res.ok) {
     console.error('Failed to fetch event:', res.statusText);
     throw new Error('Failed to fetch event data');
   }
-
-  const data = await res.json();
-  console.log('Event data:', data);
-  return data;
+  return res.json();
 }
-
-
 
 export default function EventPage({ params }: EventPageProps) {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const { isLoading, startLoading, stopLoading } = useLoading();
+  const [error, setError] = useState<string>('');
+  const [successMessage, setSuccessMessage] = useState<string>('');
   const [event, setEvent] = useState<Event | null>(null);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [success, setSuccess] = useState(false)
-  const [events, setEvents] = useState<Event[]>([]);
-  const { data: session } = useSession()
+  const { modalIsOpen, success, openModal, closeModal, handleSuccess, handleCancel } = useModal();
+  const { data: session } = useSession();
 
   useEffect(() => {
-    // Charger l'événement lors du montage du composant
     const loadEvent = async () => {
-      setIsLoading(true);
-      setError("");
-      setSuccessMessage("");
-
+      startLoading();
       try {
         const eventData = await fetchEvent(params.id);
-        setEvent(eventData); // Mettre à jour l'état avec les données de l'événement
+        setEvent(eventData);
       } catch (error) {
         console.error('Error fetching event:', error);
         setError('Failed to fetch event data');
       } finally {
-        setIsLoading(false);
+        stopLoading();
       }
     };
 
-    loadEvent(); // Appeler la fonction de chargement de l'événement
+    loadEvent();
   }, [params.id]);
 
-
-
-
   const handleDeleteEvent = async () => {
-    setIsLoading(true);
-    setError("");
-    setSuccessMessage("");
-    const event = await fetchEvent(params.id);
-    if (!event) {
-      return <div>Loading...</div>;
-    }
+    startLoading();
+    setError('');
+    setSuccessMessage('');
 
-   
-    try { 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/events/${event.id}`,
-      // const response = await fetch(`/api/events/${event.id}`,
-        {
+    try {
+      const response = await fetch(`/api/events/${params.id}`, {
         method: 'DELETE',
       });
-      const data = await response.json();
-      console.log('Deleted event:', data);
-      setSuccessMessage('Event deleted successfully');
 
-      // Redirect to the events page after successful deletion
-      setEvents(events.filter(eventfiltered => eventfiltered.id !== event.id));
-      router.push(`/events`);
+      if (response.ok) {
+        setSuccessMessage('Event deleted successfully');
+        router.push(`/events`);
+      } else {
+        setError('Failed to delete event');
+      }
     } catch (error) {
       console.error('Error deleting event:', error);
       setError('Failed to delete event');
     } finally {
-      setIsLoading(false);
+      stopLoading();
     }
-
   };
 
-  useEffect(() => {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('success')) {
-        setSuccess(true)
-        setModalIsOpen(true);
-      }else if (params.get('cancel')){
-        setSuccess(false)
-        setModalIsOpen(true);
-      }
-  }, []);
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-    // supprimer le paramètre "success" de l'URL après la fermeture de la modal
-    const url = `/events/${params.id}`;
-    router.replace(url);
-  };
-
-
-  //faire patienter
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -134,30 +87,19 @@ export default function EventPage({ params }: EventPageProps) {
     return <div>No event data available</div>;
   }
 
-
-
-
-
-    return (
-  <   div className={style.contener }  >
-        <CardShow eventData={event}/>
-        {session ?(
-          <div className="flex justify-evenly ">
-            {isLoading && <p>Suppression en cours...</p>}
-            {error && <p className="text-red-500">{error}</p>}
-            {successMessage && <p className="text-green-500">{successMessage}</p>}
-
-            <button
-              onClick={handleDeleteEvent} className="btn btn-outline btn-warning font-emoji m-10 text-xl" disabled={isLoading}> Supprimer l'événement
-            </button>
-            <Link href={`/events/update/${event.id}`} className="btn btn-outline btn-warning font-emoji m-10 text-xl">Modifier l'événement</Link>
-          </div>
-        ):null}
-
-        <Modal isOpen={modalIsOpen} onClose={closeModal} eventData={event} success={success} />
-      </div>
-
-
-
-      )
+  return (
+    <div className={style.contener}>
+      <CardShow eventData={event} />
+      {session ? (
+        <Btns
+          eventId={params.id}
+          isLoading={isLoading}
+          error={error || ''}  // Assurez-vous que error est une chaîne
+          successMessage={successMessage || ''}  // Assurez-vous que successMessage est une chaîne
+          onDelete={handleDeleteEvent}
+        />
+      ) : null}
+      <Modal isOpen={modalIsOpen} onClose={closeModal} eventData={event} success={success} />
+    </div>
+  );
 }
