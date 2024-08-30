@@ -43,7 +43,7 @@ export default function cardShow({eventData} : CardShow) {
     <div className="card bg-base-100 shadow-xl ">
       {/* <div className="bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${eventData.imageUrl})` }}> */}
       <div className="card-body p-0">
-        <div className="rounded-tr-md rounded-tl-md bg-cover bg-no-repeat relative " style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${eventData.imageUrl})`, height:`500px` }}>
+        <div className="rounded-tr-md rounded-tl-md bg-cover bg-no-repeat relative " style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${eventData.imageUrl})`, height:`auto` }}>
           <div className=' flex flex-col md:flex-row items-center justify-around p-5'>
             <h2 className="titre mb-6 p-0">{eventData.name}</h2>
             <h2 className={style.dateStage}>{new Date(eventData.dateStart).toLocaleDateString()} - {new Date(eventData.dateEnd).toLocaleDateString()}</h2>
@@ -52,14 +52,14 @@ export default function cardShow({eventData} : CardShow) {
             <p>{eventData.autre}</p>
             <p>{eventData.description}</p>
           </div>
-          <div className="card-actions justify-center mt-24" >
+          <div className="card-actions justify-center mt-24 mb-5 " >
             <Link href={registration ? `/events/${eventData.id}/register` : "#"}
-              className={`btn font-emoji content-center text-xl p-5 border-blue-900 text-blue-900 ${!registration ? ' cursor-not-allowed' : 'btn-warning'}`}
+              className={` btn font-emoji content-center text-xl p-5 border-blue-900 text-blue-900 ${!registration ? ' cursor-not-allowed' : 'btn-warning'}`}
               aria-disabled={!registration}>
               {registration ? "Je m'inscris !" : "Inscription fermée"}
             </Link>
           </div>
-          <h1 className={style.displayPrice}>{eventData.price/100} €</h1>
+            <h1 className={style.displayPrice}>{eventData.price/100} €</h1>
         </div>
         <div className='p-7'>
           <h3> Lieu: <span className='text-xl font-semibold w-[30%]'>{eventData.location?.street} - {eventData.location?.state} {eventData.location?.city}</span></h3>
