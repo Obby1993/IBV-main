@@ -37,7 +37,7 @@ export default function navbar() {
   ]
 
   return (
-    <div className={style.bg}>
+    <div className={style.background}>
       <div className='pr-10'>
         <Link href="/" >
             {/* <a className="btn btn-ghost normal-case text-xl"> */}
@@ -46,7 +46,7 @@ export default function navbar() {
           </Link>
       </div>
       <div className="flex-none">
-        <ul className="menu menu-horizontal p-0">
+        <ul className="menu menu-horizontal p-0 sm:w-full">
         {navItems.map((link, index) => (
           <li key={index}>
             <StyledLink href={link.href} className={''}>{link.label} </StyledLink>
@@ -55,7 +55,7 @@ export default function navbar() {
           {session ? <>(<li><StyledLink href={'/events/create'} className={''}>Créer un stage </StyledLink></li>
                       <li className='pt-2'><SignOutButton /></li>
                       <li className='titreCard mt-5'>{session.user?.name} est connecté. </li>)</>
-            :        (<li><StyledLink href={"/login"} className={''}> Connexion</StyledLink></li>)}
+            :        ("")}
 
         </ul>
      </div>
