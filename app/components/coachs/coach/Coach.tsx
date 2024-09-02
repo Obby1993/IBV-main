@@ -29,18 +29,19 @@ export default function Coach({ coachData }: CoachProps) {
   return (
     <div className={style.coach}>
       <h1 className="titre">{coachData.name}</h1>
-      <div className="hero place-items-start" key={coachData.id}>
-        <div className="hero-content lg:flex-row align-top">
-          <div style={{ width: '205px', height: '350px' }}>
+      {/* <div className="" > */}
+        <div key={coachData.id} className=" pt-5 md:flex md:flex-row md:justify-around lg:flex-row lg:justify-around ">
+          <div className={style.picture} >
           <ScrollImage
               src={coachData.picture}
               alt="Coach Image"
               className="rounded-lg shadow-2xl"
-              style={{ width: '300px', overflow: "hidden" }}
+              style={{  overflow: "hidden", margin:'auto' }}
             />
 
           </div>
-          <div style={{ width: '60%', height: '350px', verticalAlign: 'top' }}>
+          <div className="align-top flex- mx-9 ">
+            <h2 style={{ textDecoration: 'underline', color: 'white', fontWeight: 'bolder' }}>Le Mot du coach:</h2> 
             <p
               className="pb-6 text-white text-justify mb-3"
               style={{ height: '175px' }}            >
@@ -66,7 +67,7 @@ export default function Coach({ coachData }: CoachProps) {
             </ul>
           </div>
         </div>
-      </div>
+      {/* </div> */}
     </div>
   );
 }

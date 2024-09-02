@@ -27,5 +27,30 @@
     ],
     "picture": "/images/sam_portrait.jpg",
     "devise": "Le beach-volley offre une multitude de techniques et de gestuelles à explorer ! En découvrant et en testant différentes approches, vous pouvez créer votre propre style de jeu."
+  },
+
+  {
+    "id": 3,
+    "name": "Molinos Celia",
+    "palmares": [
+      { "year": 2024, "achievement": "5ème au championnat de France" },
+      { "year": 2023, "achievement": "9ème au championnat de France" },
+      { "year": 2023, "achievement": "Participation au Challenger de Nuvalie au Phillipine" },
+      { "year": 2022, "achievement": "2ème de la coupe de France des Clubs" }
+
+    ],
+    "picture": "/images/celia_picture.jpg",
+    "devise": "La voie de la progression passe par la répétition avec un maximum de rigueur."
+  },
+  {
+    "id": 4,
+    "name": "Molinos Naty",
+    "palmares": [
+      { "year": 2024, "achievement": "5ème au championnat de France" },
+      { "year": 2024, "achievement": "Championne de la coupe de France des Clubs" },
+      { "year": 2023, "achievement": "Participation au Challenger de Nuvalie au Phillipine" }
+    ],
+    "picture": "/images/naty_picture.jpg",
+    "devise": "La voie de la progression passe par la répétition avec un maximum de rigueur."
   }
 ]
