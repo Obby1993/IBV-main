@@ -15,7 +15,7 @@ export default function Card({event}:CardProps) {
 
   return(
     
-    <div className="m-5 card-compact sm:w-15 mb-9 md:w-96 bg-base-100 shadow-xl rounded-md ">
+    <div className="m-5 card-compact w-15 mb-9 md:w-96 bg-base-100 shadow-xl rounded-md ">
       <div className="rounded-tr-md rounded-tl-md bg-cover bg-no-repeat" style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.5)), url(${event.imageUrl})`, height:`250px` }}>
         <h2 className={`${style.dateStage} text-center `} >{new Date(event.dateStart).toLocaleDateString()} - {new Date(event.dateEnd).toLocaleDateString()}</h2>
       </div>
