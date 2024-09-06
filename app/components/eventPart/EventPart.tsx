@@ -5,36 +5,34 @@ import Card from "./card/CardEvent"
 import style from "./events.module.css"
 import  {Event}  from '../../types';
 import StyledLink from '../StyledLink';
-// import { getUpcomingSortedEvents } from "@/lib/helpers";
 
 
+import useSWR from 'swr';
 type Props = {};
 
+
+
+  
+
+const fetcher = (url: string) => fetch(url).then(res => res.json());
+
 export default function EventPart() {
-  const [events, setEvents] = useState<Event[]>([]);
+  const { data: events, error } = useSWR<Event[]>('/api/events', fetcher);
 
+  if (error) return <div>Failed to load</div>;
+  if (!events) return <div>Loading...</div>;
 
-  useEffect(() => {
-    fetch('/api/events')
-      .then(res => res.json())
-      .then(data => setEvents(data));
-  }, []);
-
-  // const SortedEvents = getUpcomingSortedEvents(events);
-  // const selectedEvents = SortedEvents.slice(0, 2);
-  return(
-  <div className={style.contenaire} >
-    <h1 className="titre">Prochains Evénements</h1>
-      <div className=" md:flex justify-around items-center gap-4 mt-8">
-        {/* {selectedEvents.map(event => ( */}
+  return (
+    <div className={style.contenaire}>
+      <h1 className="titre">Prochains Evénements</h1>
+      <div className="md:flex justify-around items-center gap-4 mt-8">
         {events.map(event => (
           <Card key={event.id} event={event} />
         ))}
       </div>
-      <div className=" flex justify-around m-8">
-        <StyledLink href={"/events"} className="">Les Stages  IBV </StyledLink>
+      <div className="flex justify-around m-8">
+        <StyledLink href={"/events"} className="">Les Stages IBV</StyledLink>
       </div>
-  </div>
-
-  )
+    </div>
+  );
 }

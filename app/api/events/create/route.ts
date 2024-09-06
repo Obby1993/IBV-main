@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import Stripe from 'stripe';
-import { revalidatePath } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/config/authOptions';
 
@@ -88,8 +88,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
     });
 
     console.log('New event created:', newEvent);
-    revalidatePath('/events');
-
+    console.log('Calling revalidateTag for /events');
+    revalidateTag('/events');
+    console.log(Event);
+    
     return NextResponse.json(newEvent, { status: 201 });
   } catch (error) {
     console.error('Error creating event:', error);
