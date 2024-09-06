@@ -25,7 +25,7 @@ export default function EventPart() {
   return (
     <div className={style.contenaire}>
       <h1 className="titre">Prochains Evénements</h1>
-      <div className="md:flex justify-around items-center gap-4 mt-8">
+      <div className=" flex flex-col md:flex-row justify-around items-center gap-4 mt-8">
         {events.map(event => (
           <Card key={event.id} event={event} />
         ))}
