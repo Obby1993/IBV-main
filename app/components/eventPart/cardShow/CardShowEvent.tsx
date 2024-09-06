@@ -44,7 +44,7 @@ export default function cardShow({eventData} : CardShow) {
       {/* <div className="bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${eventData.imageUrl})` }}> */}
       <div className="card-body p-0">
         <div className="rounded-tr-md rounded-tl-md bg-cover bg-no-repeat relative " style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${eventData.imageUrl})`, height:`auto` }}>
-          <div className=' flex flex-col md:flex-row items-center justify-around p-5'>
+          <div className=' flex flex-col  md:flex-row justify-around items-center  p-5'>
             <h2 className="titre mb-6 p-0">{eventData.name}</h2>
             <h2 className={style.dateStage}>{new Date(eventData.dateStart).toLocaleDateString()} - {new Date(eventData.dateEnd).toLocaleDateString()}</h2>
           </div>
