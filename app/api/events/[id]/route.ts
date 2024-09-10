@@ -42,6 +42,18 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
   }
 
   try {
+    // Obtenir la liste actuelle des joueurs associés à l'événement
+    const existingPlayers = await prisma.player.findMany({
+      where: { eventId: id }
+    });
+
+    // Liste des joueurs existants (par leur nom ou ID, par exemple)
+    const existingPlayerNames = existingPlayers.map(player => player.name);
+
+    // Filtrer les nouveaux joueurs à ajouter (ceux qui ne sont pas déjà dans la liste existante)
+    const newPlayers = players.filter((player: any) => !existingPlayerNames.includes(player.name));
+
+    // Mettre à jour l'événement avec seulement les nouveaux joueurs
     const updatedEvent = await prisma.event.update({
       where: { id: id },
       data: {
@@ -59,7 +71,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
         numberPlaceWomen: Number(numberPlaceWomen),
         autre,
         players: {
-          create: players.map((player: any) => ({
+          create: newPlayers.map((player: any) => ({
             name: player.name,
             paiement: player.paiement,
             niveau: player.niveau,
@@ -68,6 +80,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
         },
       },
     });
+
     console.log('Updated event:', updatedEvent);
     return NextResponse.json(updatedEvent, { status: 200 });
   } catch (err) {
@@ -75,6 +88,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
+
 
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
