@@ -50,7 +50,9 @@
     "palmares": [
       { "year": 2024, "achievement": "5ème au championnat de France" },
       { "year": 2024, "achievement": "Championne de la coupe de France des Clubs" },
-      { "year": 2023, "achievement": "Participation au Challenger de Nuvalie au Phillipine" }
+      { "year": 2023, "achievement": "Participation au Challenger de Nuvalie au Phillipine" },
+      { "year": 2024, "achievement": "5ème au championnat de France" }
+
     ],
     "picture": "/images/naty_picture.jpg",
     "devise": "La voie de la progression passe par la répétition avec un maximum de rigueur."
