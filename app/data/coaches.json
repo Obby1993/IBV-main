@@ -48,6 +48,7 @@
     "id": 4,
     "name": "Molinos Naty",
     "palmares": [
+      { "year": 2024, "achievement": "5ème à la Coupe d'Europe des clubs" },
       { "year": 2024, "achievement": "5ème au championnat de France" },
       { "year": 2024, "achievement": "Championne de la coupe de France des Clubs" },
       { "year": 2023, "achievement": "Participation au Challenger de Nuvalie au Phillipine" },
